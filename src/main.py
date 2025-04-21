@@ -2,9 +2,15 @@
 from textnode import *
 from htmlnode import *
 from copy_source_dir_to_dest import *
+#from generate_page import generate_page
+from generate_pages_recursive import *
 
 def main():
-    copy_static("static", "public")
+    copy_static("static", "public") # deletes already existing files in public , copies all files from static to public dirs
+
+    #generate_page("content/index.md","template.html","public/index.html")
+    generate_pages_recursive("content", "template.html", "public")
+    
 
 if __name__ == "__main__":
     main()

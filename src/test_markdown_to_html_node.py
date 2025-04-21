@@ -71,12 +71,12 @@ class TestMarkDownToHTMLNode(unittest.TestCase):
 
         def test_blockquote(self):
                         md = """
-                > This is a
-                > blockquote block
+                            > This is a
+                            > blockquote block
 
-                this is paragraph text
+                            this is paragraph text
 
-                """
+                            """
 
                         node = markdown_to_html_node(md)
                         html = node.to_html()
@@ -95,8 +95,7 @@ class TestMarkDownToHTMLNode(unittest.TestCase):
 
             node = markdown_to_html_node(md)
             html = node.to_html()
-            print(f"ACTUAL HTML: {html}")
-            print(f"EXPECTED: <div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>")
+    
             self.assertEqual(
                 html,
                 "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",

@@ -31,46 +31,26 @@ class LeafNode(HTMLNode):
         if value is None:
             raise ValueError("LeafNode must have a value")
     def to_html(self):
-        #print("to_html method in LeafNode called")  # Debug print
-        if(self.value is None):
-            raise ValueError("All leaf nodes must have a value.")
-        if(self.tag is None):
+        if self.value is None:
+            raise ValueError("invalid HTML: no value")
+        if self.tag is None:
             return self.value
-        # Build opening tag with props if they exist
-        opening_tag = f"<{self.tag}"
-        if self.props:
-            for key, value in self.props.items():
-                opening_tag += f' {key}="{value}"'
-        opening_tag += ">"
+        return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
         
-        # Create the full HTML string with opening tag, value, and closing tag
-        return f"{opening_tag}{self.value}</{self.tag}>"
+        # # Create the full HTML string with opening tag, value, and closing tag
+        # return f"{opening_tag}{self.value}</{self.tag}>"
 class ParentNode(HTMLNode):
     def __init__(self, tag,children, props=None):
         super().__init__(tag, None, children, props)
     def to_html(self):
-        
-        if(self.tag is None):
-            raise ValueError("Missing tag")
-        if self.children is None:  # or possibly: if not self.children
-            raise ValueError("Missing children")
-        # Create opening tag
-        html = f"<{self.tag}"
-        # Add props if they exist
-        if self.props:
-            # Logic to handle props
-            for prop_name, prop_value in self.props.items():
-                html += f' {prop_name}="{prop_value}"'
-        html += ">"
-        
-        # Add children's HTML
+        if self.tag is None:
+            raise ValueError("invalid HTML: no tag")
+        if self.children is None:
+            raise ValueError("invalid HTML: no children")
+        children_html = ""
         for child in self.children:
-            html += child.to_html()  # Recursive call!
-        
-        # Add closing tag
-        html += f"</{self.tag}>"
-
-        return html
+            children_html += child.to_html()
+        return f"<{self.tag}{self.props_to_html()}>{children_html}</{self.tag}>"
 
 def text_node_to_html_node(text_node):
     if(text_node.text_type == TextType.TEXT):

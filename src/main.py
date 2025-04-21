@@ -4,12 +4,18 @@ from htmlnode import *
 from copy_source_dir_to_dest import *
 #from generate_page import generate_page
 from generate_pages_recursive import *
+import sys
 
 def main():
-    copy_static("static", "public") # deletes already existing files in public , copies all files from static to public dirs
+    copy_static("static", "docs") # deletes already existing files in public , copies all files from static to public dirs
+
+    # Get basepath from command line arguments, default to '/'
+    basepath = '/'
+    if len(sys.argv) > 1:  # Check if there's at least one argument after the script name
+        basepath = sys.argv[1]  # Take the first actual argument (index 1)
 
     #generate_page("content/index.md","template.html","public/index.html")
-    generate_pages_recursive("content", "template.html", "public")
+    generate_pages_recursive("content", "template.html", "docs",basepath)
     
 
 if __name__ == "__main__":

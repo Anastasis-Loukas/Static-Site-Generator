@@ -1,7 +1,7 @@
 import os
 from generate_page import *
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path,basepath):
     entries = os.listdir(dir_path_content)
     
     for entry in entries:
@@ -18,7 +18,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
             os.makedirs(os.path.dirname(dest_path), exist_ok=True)
             
             # Generate the HTML using your existing function
-            generate_page(entry_path, template_path, dest_path)
+            generate_page(entry_path, template_path, dest_path,basepath)
             
         elif os.path.isdir(entry_path):
             # Create corresponding directory in destination
@@ -26,4 +26,4 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
             os.makedirs(new_dest_dir, exist_ok=True)
             
             # Recursively process the subdirectory
-            generate_pages_recursive(entry_path, template_path, new_dest_dir)
+            generate_pages_recursive(entry_path, template_path, new_dest_dir,basepath)
